@@ -19,7 +19,7 @@
       (cons org-gtd-directory nil))
 
 (setq org-default-notes-file
-      (concat (foile-name-as-directory org-gtd-directory)
+      (concat (file-name-as-directory org-gtd-directory)
 	      "inbox.org"))
 
 (setq org-todo-keywords
@@ -27,14 +27,21 @@
 	(sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
 
 (setq org-capture-templates
-      '(("t" "Todo" entry (file "~/.org/inbox.org")
+      '(("t" "Todo" entry (file+headline "~/.org/inbox.org" "REFILE")
 	 "* TODO %?\n%U\n")))
 
 (setq org-refile-targets
       '((nil :maxlevel . 1)
 	(org-agenda-files :maxlevel . 1)))
 
+(setq org-columns-default-format
+      "%25ITEM %TODO %3PRIORITY %TIMESTAMP")
+
 (setq org-confirm-babel-evaluate nil)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)))
 
 (provide 'org-gtd)
 
